@@ -1,5 +1,5 @@
 import { h, nextTick } from 'vue'
-import { PopupManager } from '@element-plus/utils/popup-manager'
+import { usePopupManager } from '@element-plus/hooks'
 import makeMount from '@element-plus/test-utils/make-mount'
 import { rAF } from '@element-plus/test-utils/tick'
 import { ElPopperTrigger } from '@element-plus/components/popper'
@@ -93,11 +93,10 @@ describe('Popover.vue', () => {
   test('popper z-index should be dynamical', () => {
     wrapper = mount()
 
+    const { currentZIndex } = usePopupManager()
     expect(
       Number.parseInt(window.getComputedStyle(findContentComp().element).zIndex)
-    ).toBeLessThanOrEqual(
-      PopupManager.zIndex + PopupManager.globalInitialZIndex
-    )
+    ).toBeLessThanOrEqual(currentZIndex())
   })
 
   test('defind hide method', async () => {
